@@ -9,7 +9,7 @@ from imblearn.over_sampling import SMOTE
 from sklearn.linear_model import LassoCV
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
-#from mlxtend.feature_selection import SequentialFeatureSelector as SFS
+from mlxtend.feature_selection import SequentialFeatureSelector as SFS
 import matplotlib.pyplot as plt
 
 import statsmodels.api as sm
@@ -323,6 +323,7 @@ def prepare_supervised_data(df, numeric_columns, categorical_columns):
     tabs = st.tabs([
         "Basic Operations",
         "Missing Values",
+        "Manage Columns Values",
         "Feature Engineering",
         "Advanced Operations"
     ])
@@ -347,7 +348,55 @@ def prepare_supervised_data(df, numeric_columns, categorical_columns):
             if st.checkbox("Drop Unused Columns"):
                 unused_cols = st.multiselect("Select columns to drop", df.columns)
                 processed_data.drop(columns=unused_cols, inplace=True)
-              
+            if st.checkbox("Remove rows with missing value"):
+                initial_rows = processed_data.shape[0]
+                processed_data.dropna(inplace=True)
+                st.info(f"Removed {initial_rows - processed_data.shape[0]} missing values rows.")
+        if st.checkbox("Determine The Type"):
+            st.markdown("### Column Types Inferred")
+
+            # Identify initial types
+            numeric_cols = processed_data.select_dtypes(include=['number']).columns.tolist()
+            categorical_cols = processed_data.select_dtypes(include=['object', 'category']).columns.tolist()
+            datetime_cols = processed_data.select_dtypes(include=['datetime']).columns.tolist()
+
+            # Display the inferred types
+            st.write(f"**Numeric Columns:** {', '.join(numeric_cols) if numeric_cols else 'None'}")
+            st.write(f"**Categorical Columns:** {', '.join(categorical_cols) if categorical_cols else 'None'}")
+            st.write(f"**Datetime Columns:** {', '.join(datetime_cols) if datetime_cols else 'None'}")
+
+            # Option to change data type
+            st.markdown("### Change Column Data Types")
+            column_to_change = st.selectbox("Select Column to Change Type", processed_data.columns)
+            new_type = st.radio("Select New Data Type", ["Numeric", "Categorical", "Datetime"])
+
+            if st.button("Change Type"):
+                try:
+                    if new_type == "Numeric":
+                        processed_data[column_to_change] = pd.to_numeric(processed_data[column_to_change], errors='coerce')
+                    elif new_type == "Categorical":
+                        processed_data[column_to_change] = processed_data[column_to_change].astype('category')
+                    elif new_type == "Datetime":
+                        processed_data[column_to_change] = pd.to_datetime(
+                            processed_data[column_to_change], format="%m-%y", errors='coerce'
+                        )
+                    st.success(f"Successfully changed type of '{column_to_change}' to {new_type}.")
+                except Exception as e:
+                    st.error(f"Error changing type: {e}")
+
+        # Show the processed data after all operations
+        st.markdown("### Processed Dataset")
+        st.dataframe(processed_data.head())
+
+        # Download option for processed data
+        csv = processed_data.to_csv(index=False).encode('utf-8')
+        st.download_button(
+            label="Download Processed Data as CSV",
+            data=csv,
+            file_name='processed_data.csv',
+            mime='text/csv'
+        )
+
 
     # Missing Values Tab
     
@@ -404,9 +453,55 @@ def prepare_supervised_data(df, numeric_columns, categorical_columns):
 
             st.markdown('</div>', unsafe_allow_html=True)  # End of data preview section
 
+    with tabs[2]:
+        st.markdown("### Manage Columns Values")
+        if st.checkbox("Replace Multiple Values with Multiple Replacements"):
+            num_operations = st.number_input("How many columns do you want to modify?", min_value=1, step=1)
+
+            replacement_operations = []  # List to store all operations
+
+            for i in range(num_operations):
+                st.write(f"### Replacement Operation {i + 1}")
+                column_to_replace = st.selectbox(f"Select column for operation {i + 1}", processed_data.columns, key=f"col_{i}")
+                
+                mapping_input = st.text_area(f"Enter values and replacements (format: old1:new1, old2:new2) for operation {i + 1}", key=f"map_{i}")
+                
+                if column_to_replace and mapping_input:
+                    # Parse the mapping input into a dictionary
+                    mapping = {pair.split(":")[0].strip(): pair.split(":")[1].strip() for pair in mapping_input.split(",")}
+                    replacement_operations.append((column_to_replace, mapping))
+
+            if st.button("Apply Replacements"):
+                if replacement_operations:
+                    for col, mapping in replacement_operations:
+                        processed_data[col] = processed_data[col].replace(mapping, regex=True)
+                        st.info(f"Applied replacements in column '{col}': {mapping}")
+                else:
+                    st.warning("Please define at least one replacement operation before applying.")
+
+
+            st.markdown('<div class="data-preview">', unsafe_allow_html=True)
+            col1, col2 = st.columns(2)
+
+            with col1:
+                st.markdown('<div class="data-section">', unsafe_allow_html=True)
+                st.write("### Dataset Preview")
+                st.dataframe(df.head())
+                st.markdown('</div>', unsafe_allow_html=True)
+
+            
+            with col2:
+                st.markdown('<div class="data-section">', unsafe_allow_html=True)
+                st.write("### Final Processed Data")
+                st.dataframe(processed_data.head())
+                #st.markdown('</div>', unsafe_allow_html=True)
+
+            st.markdown('</div>', unsafe_allow_html=True)  # End of data preview section
+
+
 
 # Feature Engineering Tab
-    with tabs[2]:
+    with tabs[3]:
         st.markdown("### Feature Engineering")
         cool1, cool2 = st.columns(2)
         
@@ -417,8 +512,13 @@ def prepare_supervised_data(df, numeric_columns, categorical_columns):
                 method = st.selectbox("Encoding method", ["Label Encoding", "One-Hot Encoding"])
                 if method == "Label Encoding":
                     le = LabelEncoder()
+                    
                     for col in categorical_cols:
                         processed_data[col] = le.fit_transform(processed_data[col])
+                        mapping = {original: encoded for encoded, original in enumerate(le.classes_)}
+                        st.write(f"### Label Encoding Mapping for '{col}':")
+                        st.write(", ".join([f"{k}: {v}" for k, v in mapping.items()]))
+                    
                     st.info("Categorical variables encoded using Label Encoding.")
                 else:
                     processed_data = pd.get_dummies(processed_data, drop_first=True)
@@ -482,7 +582,7 @@ def prepare_supervised_data(df, numeric_columns, categorical_columns):
         st.markdown('</div>', unsafe_allow_html=True)  # End of data preview section
 
 # Advanced Operations Tab
-    with tabs[3]:
+    with tabs[4]:
         st.markdown("### Advanced Operations")
         
         # Split processed_data into features and target
@@ -669,6 +769,7 @@ def prepare_supervised_data(df, numeric_columns, categorical_columns):
                     # Update processed data with combined features
                     if combined_features:
                         processed_data = processed_data[combined_features + [target_column]]
+
 
 
                     

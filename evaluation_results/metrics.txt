@@ -1,4 +1,4 @@
-Accuracy: 0.9333
-Precision: 0.9333
-Recall: 0.9333
-F1 Score: 0.9333
+R² Score: 0.9819
+Mean Squared Error: 46618849869008437248.0000
+Mean Absolute Error: 5833208606.9564
+Root Mean Squared Error: 6827799782.4342

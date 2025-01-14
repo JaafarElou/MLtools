@@ -7,6 +7,7 @@ import plotly.graph_objects as go
 import numpy as np 
 import matplotlib.pyplot as plt
 import numpy as np
+
 def data_visualization_page():
     # Custom CSS
     # Custom CSS
@@ -286,11 +287,11 @@ def visualize_supervised_data(df, numeric_columns, categorical_columns):
 
     # Regression Visualizations
     if problem_type == "Regression":
-        st.markdown("###  Regression Visualizations")
+        st.markdown("### Regression Visualizations")
         
-        # Target Variable Distribution
-        st.markdown("#### Target Variable Distribution")
-        fig = px.histogram(df, x=target_col, nbins=30, title="Distribution of Target Variable")
+        # Line Plot for Target Variable Distribution
+        st.markdown("#### Target Variable Line Plot")
+        fig = px.line(df, x=df.index, y=target_col, title="Line Plot of Target Variable")
         fig.update_layout(template="plotly_dark", paper_bgcolor="#121212", font=dict(color="#ffffff"))
         st.plotly_chart(fig, use_container_width=True)
 
@@ -318,6 +319,7 @@ def visualize_supervised_data(df, numeric_columns, categorical_columns):
         fig = px.box(df, y=target_col, title="Boxplot of Target Variable")
         fig.update_layout(template="plotly_dark", paper_bgcolor="#121212", font=dict(color="#ffffff"))
         st.plotly_chart(fig, use_container_width=True)
+
 
     # Classification Visualizations
     elif problem_type == "Classification":

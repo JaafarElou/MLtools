@@ -117,14 +117,14 @@ def guide_page():
     st.header("Watch the video tutorials")
 
     # Local file paths for the videos
-    supervised_video_path = r"C:\Users\dell\Desktop\Streamlit_App_lastone (3)\Streamlit_App_lastone\Streamlit_App11\Streamlit_App\Streamlit_App\uploads\supervised.mp4"
-    unsupervised_video_path = r"C:\Users\dell\Desktop\Streamlit_App_lastone (3)\Streamlit_App_lastone\Streamlit_App11\Streamlit_App\Streamlit_App\uploads\clustring.mp4"
-    deep_learning_video_path = r"C:\Users\dell\Desktop\Streamlit_App_lastone (3)\Streamlit_App_lastone\Streamlit_App11\Streamlit_App\Streamlit_App\uploads\deeplearning.mp4"
+    supervised_video_path = r"uploads\supervised.mp4"
+    unsupervised_video_path = r"uploads\clustring.mp4"
+    deep_learning_video_path = r"uploads\deeplearning.mp4"
 
     # Thumbnails for the videos (ensure to replace the image paths with the actual paths)
-    supervised_thumbnail = r"C:\Users\dell\Desktop\Streamlit_App_lastone (3)\Streamlit_App_lastone\Streamlit_App11\Streamlit_App\Streamlit_App\uploads\supervised.png"
-    unsupervised_thumbnail = r"C:\Users\dell\Desktop\Streamlit_App_lastone (3)\Streamlit_App_lastone\Streamlit_App11\Streamlit_App\Streamlit_App\uploads\unsupervised.png"
-    deep_learning_thumbnail = r"C:\Users\dell\Desktop\Streamlit_App_lastone (3)\Streamlit_App_lastone\Streamlit_App11\Streamlit_App\Streamlit_App\uploads\deep.png"
+    supervised_thumbnail = r"uploads\supervised.png"
+    unsupervised_thumbnail = r"uploads\unsupervised.png"
+    deep_learning_thumbnail = r"uploads\deep.png"
 
     # Display video tutorials with thumbnails
     st.subheader("1. Supervised Learning")

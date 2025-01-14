@@ -7,7 +7,6 @@ from src.evaluation import evaluation_page
 from src.guide import guide_page
 
 
-
 def home_page():
     """
     Enhanced Home Page for the ML Exploration App with Sidebar and Modern Icons
