@@ -1,4 +1,4 @@
-R² Score: 0.9819
-Mean Squared Error: 46618849869008437248.0000
-Mean Absolute Error: 5833208606.9564
-Root Mean Squared Error: 6827799782.4342
+R² Score: -0.0188
+Mean Squared Error: 307061.1169
+Mean Absolute Error: 473.9593
+Root Mean Squared Error: 554.1310

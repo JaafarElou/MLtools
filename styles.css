@@ -1,44 +1,44 @@
 /* General Body Styling */
 body {
-    background-color: #121212;
+    background-color: #0a0a0a; /* Changed from #121212 */
     font-family: 'Roboto', Arial, sans-serif;
-    color: #ffffff;
+    color: #f0f0f0; /* Changed from #ffffff */
     margin: 0;
     padding: 0;
 }
 
 /* Header Styling */
 header {
-    background-color: #1f1f1f;
+    background-color: #2a2a2a; /* Changed from #1f1f1f */
     padding: 20px;
     text-align: center;
-    border-bottom: 2px solid #343434;
+    border-bottom: 2px solid #444444; /* Changed from #343434 */
 }
 
 header h1 {
     font-size: 2.5em;
-    color: #1db954;
+    color: #ff6f61; /* Changed from #1db954 */
     margin: 0;
     font-weight: bold;
 }
 
 header p {
     font-size: 1.1em;
-    color: #b3b3b3;
+    color: #cccccc; /* Changed from #b3b3b3 */
     margin: 5px 0 0;
 }
 
 /* Navigation Bar Styling */
 nav {
-    background-color: #181818;
+    background-color: #222222; /* Changed from #181818 */
     padding: 10px;
     display: flex;
     justify-content: space-around;
-    border-bottom: 1px solid #333333;
+    border-bottom: 1px solid #444444; /* Changed from #333333 */
 }
 
 nav a {
-    color: #1db954;
+    color: #ff6f61; /* Changed from #1db954 */
     text-decoration: none;
     font-weight: bold;
     padding: 8px 16px;
@@ -47,7 +47,7 @@ nav a {
 }
 
 nav a:hover {
-    background-color: #1db954;
+    background-color: #ff6f61; /* Changed from #1db954 */
     color: #ffffff;
 }
 
@@ -65,8 +65,8 @@ main {
 
 /* Card Styling */
 .card {
-    background-color: #202020;
-    border: 1px solid #343434;
+    background-color: #2a2a2a; /* Changed from #202020 */
+    border: 1px solid #444444; /* Changed from #343434 */
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     width: 280px;
@@ -87,19 +87,19 @@ main {
 }
 
 .card h3 {
-    color: #1db954;
+    color: #ff6f61; /* Changed from #1db954 */
     font-size: 1.5em;
     margin-bottom: 10px;
 }
 
 .card p {
-    color: #b3b3b3;
+    color: #cccccc; /* Changed from #b3b3b3 */
     font-size: 1em;
 }
 
 /* Button Styling */
 button {
-    background-color: #1db954;
+    background-color: #ff6f61; /* Changed from #1db954 */
     color: #ffffff;
     font-size: 1em;
     font-weight: bold;
@@ -111,16 +111,16 @@ button {
 }
 
 button:hover {
-    background-color: #148f3d;
+    background-color: #e65a50; /* Changed from #148f3d */
 }
 
 /* Footer Styling */
 footer {
-    background-color: #1f1f1f;
-    color: #b3b3b3;
+    background-color: #2a2a2a; /* Changed from #1f1f1f */
+    color: #cccccc; /* Changed from #b3b3b3 */
     text-align: center;
     padding: 15px;
-    border-top: 2px solid #343434;
+    border-top: 2px solid #444444; /* Changed from #343434 */
     font-size: 0.9em;
 }
 

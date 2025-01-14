@@ -292,7 +292,7 @@ def visualize_supervised_data(df, numeric_columns, categorical_columns):
         # Line Plot for Target Variable Distribution
         st.markdown("#### Target Variable Line Plot")
         fig = px.line(df, x=df.index, y=target_col, title="Line Plot of Target Variable")
-        fig.update_layout(template="plotly_dark", paper_bgcolor="#121212", font=dict(color="#ffffff"))
+        fig.update_layout(template="plotly_dark", paper_bgcolor="#f0f0f0", font=dict(color="#ffffff"))
         st.plotly_chart(fig, use_container_width=True)
 
         # Scatter Plot
@@ -304,7 +304,7 @@ def visualize_supervised_data(df, numeric_columns, categorical_columns):
             with col2:
                 y_axis = st.selectbox("Select Y-axis:", numeric_columns)
             fig = px.scatter(df, x=x_axis, y=y_axis, trendline="ols", title="Scatter Plot with Trendline")
-            fig.update_layout(template="plotly_dark", paper_bgcolor="#121212", font=dict(color="#ffffff"))
+            fig.update_layout(template="plotly_dark", paper_bgcolor="#f0f0f0", font=dict(color="#ffffff"))
             st.plotly_chart(fig, use_container_width=True)
 
         # Correlation Heatmap
@@ -317,7 +317,7 @@ def visualize_supervised_data(df, numeric_columns, categorical_columns):
         # Boxplot for Outliers
         st.markdown("#### Boxplot of Target Variable")
         fig = px.box(df, y=target_col, title="Boxplot of Target Variable")
-        fig.update_layout(template="plotly_dark", paper_bgcolor="#121212", font=dict(color="#ffffff"))
+        fig.update_layout(template="plotly_dark", paper_bgcolor="#f0f0f0", font=dict(color="#ffffff"))
         st.plotly_chart(fig, use_container_width=True)
 
 
@@ -330,7 +330,7 @@ def visualize_supervised_data(df, numeric_columns, categorical_columns):
         class_counts = df[target_col].value_counts()
         fig = px.bar(class_counts, x=class_counts.index, y=class_counts.values,
                      labels={'x': target_col, 'y': 'Count'}, title="Class Distribution")
-        fig.update_layout(template="plotly_dark", paper_bgcolor="#121212", font=dict(color="#ffffff"))
+        fig.update_layout(template="plotly_dark", paper_bgcolor="#f0f0f0", font=dict(color="#ffffff"))
         st.plotly_chart(fig, use_container_width=True)
 
         # Pair Plot
@@ -354,7 +354,7 @@ def visualize_supervised_data(df, numeric_columns, categorical_columns):
             fig = px.bar(grouped, x=category, y="count", color=target_col, barmode="group",
                          title=f"Grouped Bar Chart of {category} by {target_col}",
                          labels={category: "Feature", "count": "Count"})
-            fig.update_layout(template="plotly_dark", paper_bgcolor="#121212", font=dict(color="#ffffff"))
+            fig.update_layout(template="plotly_dark", paper_bgcolor="#f0f0f0", font=dict(color="#ffffff"))
             st.plotly_chart(fig, use_container_width=True)
 
         # Violin Plot by Class
@@ -362,7 +362,7 @@ def visualize_supervised_data(df, numeric_columns, categorical_columns):
         feature = st.selectbox("Select Feature for Violin Plot:", numeric_columns)
         fig = px.violin(df, y=feature, x=target_col, box=True, points="all", color=target_col,
                         title=f"Violin Plot of {feature} by {target_col}")
-        fig.update_layout(template="plotly_dark", paper_bgcolor="#121212", font=dict(color="#ffffff"))
+        fig.update_layout(template="plotly_dark", paper_bgcolor="#f0f0f0", font=dict(color="#ffffff"))
         st.plotly_chart(fig, use_container_width=True)
 
     # General Visualizations (Fallback)
@@ -372,12 +372,12 @@ def visualize_supervised_data(df, numeric_columns, categorical_columns):
             st.markdown("#### Feature Histogram")
             column = st.selectbox("Select a Numeric Column for Histogram:", numeric_columns)
             fig = px.histogram(df, x=column)
-            fig.update_layout(template="plotly_dark", paper_bgcolor="#121212", font=dict(color="#ffffff"))
+            fig.update_layout(template="plotly_dark", paper_bgcolor="#f0f0f0", font=dict(color="#ffffff"))
             st.plotly_chart(fig, use_container_width=True)
 
             st.markdown("#### Boxplot")
             fig = px.box(df, y=column)
-            fig.update_layout(template="plotly_dark", paper_bgcolor="#121212", font=dict(color="#ffffff"))
+            fig.update_layout(template="plotly_dark", paper_bgcolor="#f0f0f0", font=dict(color="#ffffff"))
             st.plotly_chart(fig, use_container_width=True)
 
 def visualize_unsupervised_data(df, numeric_columns, categorical_columns):
@@ -423,7 +423,7 @@ def visualize_unsupervised_data(df, numeric_columns, categorical_columns):
                         nbins=30,
                         marginal="box"
                     )
-                    fig.update_layout(template="plotly_dark", paper_bgcolor="#121212")
+                    fig.update_layout(template="plotly_dark", paper_bgcolor="#f0f0f0")
                     st.plotly_chart(fig, use_container_width=True)
                     
                     
@@ -435,7 +435,7 @@ def visualize_unsupervised_data(df, numeric_columns, categorical_columns):
                 y=selected_features,
                 title="Box Plots of Selected Features"
             )
-            fig.update_layout(template="plotly_dark", paper_bgcolor="#121212")
+            fig.update_layout(template="plotly_dark", paper_bgcolor="#f0f0f0")
             st.plotly_chart(fig, use_container_width=True)
 
         if viz_type in ["Kernel Density Plots", "All"]:
@@ -451,7 +451,7 @@ def visualize_unsupervised_data(df, numeric_columns, categorical_columns):
             fig.update_layout(
                 title="Kernel Density Estimation with Violin Plots",
                 template="plotly_dark",
-                paper_bgcolor="#121212"
+                paper_bgcolor="#f0f0f0"
             )
             st.plotly_chart(fig, use_container_width=True)
 
@@ -477,7 +477,7 @@ def visualize_unsupervised_data(df, numeric_columns, categorical_columns):
                 title=f"Scatter Plot: {x_feature} vs {y_feature}",
                 trendline="ols"
             )
-            fig.update_layout(template="plotly_dark", paper_bgcolor="#121212")
+            fig.update_layout(template="plotly_dark", paper_bgcolor="#f0f0f0")
             st.plotly_chart(fig, use_container_width=True)
 
             # Add correlation coefficient
@@ -499,7 +499,7 @@ def visualize_unsupervised_data(df, numeric_columns, categorical_columns):
                 marginal_x="histogram",
                 marginal_y="histogram"
             )
-            fig.update_layout(template="plotly_dark", paper_bgcolor="#121212")
+            fig.update_layout(template="plotly_dark", paper_bgcolor="#f0f0f0")
             st.plotly_chart(fig, use_container_width=True)
 
         """else:  # Correlation Analysis
@@ -513,7 +513,7 @@ def visualize_unsupervised_data(df, numeric_columns, categorical_columns):
                 text=np.round(corr_matrix, 2),
                 aspect="auto"
             )
-            fig.update_layout(template="plotly_dark", paper_bgcolor="#121212")
+            fig.update_layout(template="plotly_dark", paper_bgcolor="#f0f0f0")
             st.plotly_chart(fig, use_container_width=True)
 
             # Identify highly correlated features
@@ -546,7 +546,7 @@ def visualize_unsupervised_data(df, numeric_columns, categorical_columns):
                 dimensions=selected_features,
                 title="Pair Plot of Selected Features"
             )
-            fig.update_layout(template="plotly_dark", paper_bgcolor="#121212")
+            fig.update_layout(template="plotly_dark", paper_bgcolor="#f0f0f0")
             st.plotly_chart(fig, use_container_width=True)
 
         else:  # 3D Scatter Plot
@@ -566,7 +566,7 @@ def visualize_unsupervised_data(df, numeric_columns, categorical_columns):
                     z=z_feature,
                     title="3D Scatter Plot"
                 )
-                fig.update_layout(template="plotly_dark", paper_bgcolor="#121212")
+                fig.update_layout(template="plotly_dark", paper_bgcolor="#f0f0f0")
                 st.plotly_chart(fig, use_container_width=True)
             else:
                 st.warning("Please select at least 3 features for 3D visualization")

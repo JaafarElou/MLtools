@@ -90,3 +90,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+'''Label Encoding Mapping for 'Product_Category':
+Beverages: 0, Dairy: 1, Household: 2, Personal Care: 3, Snacks: 4
+
+Label Encoding Mapping for 'Store_Location':
+Rural: 0, Suburban: 1, Urban: 2'''

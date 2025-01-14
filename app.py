@@ -16,14 +16,14 @@ def home_page():
         <style>
             /* General Page Styling */
             body {
-                background-color: #DCE4C9;
+                background-color: #F0F4F8; /* Changed from #DCE4C9 */
                 font-family: 'Arial', sans-serif;
             }
 
             /* Header Section */
             .header {
                 text-align: center;
-                background-color: #272727;
+                background-color: #2C3E50; /* Changed from #272727 */
                 color: #FFFFFF;
                 padding: 30px;
                 border-radius: 10px;
@@ -31,12 +31,12 @@ def home_page():
             .header h1 {
                 font-size: 3rem;
                 margin: 0;
-                color: #E07B39;
+                color: #E67E22; /* Changed from #E07B39 */
             }
             .header p {
                 font-size: 1.3rem;
                 margin: 10px 0 0 0;
-                color: #B6A28E;
+                color: #BDC3C7; /* Changed from #B6A28E */
             }
 
             /* Features Section */
@@ -48,7 +48,7 @@ def home_page():
             }
             .feature-card {
                 text-align: center;
-                background-color: #F5F5DC;
+                background-color: #FFFFFF; /* Changed from #F5F5DC */
                 border-radius: 10px;
                 padding: 20px;
                 width: 22%;
@@ -57,7 +57,7 @@ def home_page():
             }
             .feature-card:hover {
                 transform: translateY(-5px);
-                background-color: #E07B39;
+                background-color: #f0f0f0; /* Changed from #E07B39 */
                 color: #FFFFFF;
             }
             .feature-icon {
@@ -72,16 +72,16 @@ def home_page():
             .feature-title {
                 font-size: 1.2rem;
                 font-weight: bold;
-                color: #272727;
+                color: #2C3E50; /* Changed from #272727 */
             }
             .feature-description {
                 font-size: 1rem;
-                color: #555555;
+                color: #7F8C8D; /* Changed from #555555 */
             }
 
             /* Sidebar Styling */
             [data-testid="stSidebar"] {
-                background-color: #DCE4C9 !important;
+                background-color: #F0F4F8 !important; /* Changed from #DCE4C9 */
                 padding: 15px;
             }
             .sidebar-button {
@@ -92,38 +92,38 @@ def home_page():
                 background-color: transparent;
                 border: none;
                 cursor: pointer;
-                color: #272727;
+                color: #2C3E50; /* Changed from #272727 */
                 font-size: 1rem;
                 border-radius: 5px;
                 transition: background-color 0.3s;
             }
             .sidebar-button:hover {
-                background-color: #FFFFFF;
+                background-color: #E67E22; /* Changed from #FFFFFF */
                 color: #FFFFFF;
             }
-                .header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #272727;
-            color: #FFFFFF;
-            padding: 30px;
-            border-radius: 10px;
-        }
-        .header h1 {
-            font-size: 3rem;
-            margin: 0 15px 0 0; /* Add space between logo and title */
-            color: #E07B39;
-        }
-        .header p {
-            font-size: 1.3rem;
-            margin: 10px 0 0 0;
-            color: #B6A28E;
-        }
-        .header img {
-            height: 80px; /* Adjust the size of the logo */
-            margin-right: 15px; /* Add space between logo and text */
-        }
+            .header {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #2C3E50; /* Changed from #272727 */
+                color: #FFFFFF;
+                padding: 30px;
+                border-radius: 10px;
+            }
+            .header h1 {
+                font-size: 3rem;
+                margin: 0 15px 0 0; /* Add space between logo and title */
+                color: #E67E22; /* Changed from #E07B39 */
+            }
+            .header p {
+                font-size: 1.3rem;
+                margin: 10px 0 0 0;
+                color: #BDC3C7; /* Changed from #B6A28E */
+            }
+            .header img {
+                height: 80px; /* Adjust the size of the logo */
+                margin-right: 15px; /* Add space between logo and text */
+            }
         </style>
     """, unsafe_allow_html=True)
 
