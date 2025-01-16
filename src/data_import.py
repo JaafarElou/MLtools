@@ -81,7 +81,7 @@ def data_import_page():
 
             /* Sidebar Styling */
             [data-testid="stSidebar"] {
-                background-color: #DCE4C9 !important;
+                background-color: #F0F4F8 !important;
                 padding: 15px;
             }
             .sidebar-button {
@@ -99,7 +99,7 @@ def data_import_page():
             }
                 .navigation-bar {
             text-align: center;
-            background-color: #272727;
+            background-color: #2C3E50;
             color: #E07B39;
             border-radius: 5px;
         }
@@ -114,8 +114,8 @@ def data_import_page():
         </style>
     """, unsafe_allow_html=True)
 
-    
-    st.markdown('<div class="navigation-bar"><h2>Data Handling</h2></div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="navigation-bar"><h2>🗂️ Import Data</h2></div>', unsafe_allow_html=True)
 
     # Reset dataset button in the sidebar
     if st.sidebar.button("Reset Dataset", key="reset_dataset_btn"):

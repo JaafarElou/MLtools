@@ -102,6 +102,7 @@ def plot_silhouette(X, labels):
     plt.xlabel("Silhouette Coefficient Values")
     plt.ylabel("Cluster Label")
     return fig
+
 def add_prediction_section():
     st.header("Make Predictions")
     
@@ -130,7 +131,7 @@ def add_prediction_section():
             prediction = model.predict(input_data)[0]
             
             # Display result
-            st.success(f"Prediction: {prediction}")
+            st.success(f"Prediction: {prediction:.2f}")
             
     else:  # Batch Prediction
         st.write("Upload a CSV file with the same features as your training data")
@@ -532,7 +533,7 @@ def evaluation_page():
 
             /* Sidebar Styling */
             [data-testid="stSidebar"] {
-                background-color: #DCE4C9 !important;
+                background-color: #F0F4F8 !important;
                 padding: 15px;
             }
             .sidebar-button {
@@ -554,7 +555,7 @@ def evaluation_page():
             }
                  .navigation-bar {
             text-align: center;
-            background-color: #272727;
+            background-color: #2C3E50;
             color: #E07B39;
             border-radius: 5px;
         }
@@ -565,7 +566,7 @@ def evaluation_page():
         </style>
     """, unsafe_allow_html=True)
     #st.title("Model Evaluation Dashboard")
-    st.markdown('<div class="navigation-bar"><h2>Model Evaluation</h2></div>', unsafe_allow_html=True)
+    st.markdown('<div class="navigation-bar"><h2>🧭 Model Evaluation</h2></div>', unsafe_allow_html=True)
 
     if 'trained_model' not in st.session_state:
         st.warning("No trained model found. Please train a model first.")
@@ -1107,7 +1108,19 @@ def evaluate_supervised_model():
         file_name="evaluation_results.zip",
         mime="application/zip"
     )
-    
+
+    # Assuming `model` is your trained machine learning model
+    st.header("Save Model")
+
+    # Define the local path where the model will be saved
+    local_path = "model.pkl"
+
+    # Create a button
+    if st.button("Save Model"):
+        # Save the model when the button is pressed
+        joblib.dump(model, local_path)
+        st.success(f"Model saved to {local_path}")
+
 # Run the Streamlit App
 if __name__ == "__main__":
     evaluation_page()

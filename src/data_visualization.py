@@ -80,7 +80,7 @@ def data_visualization_page():
 
             /* Sidebar Styling */
             [data-testid="stSidebar"] {
-                background-color: #DCE4C9 !important;
+                background-color: #F0F4F8 !important;
                 padding: 15px;
             }
             .sidebar-button {
@@ -98,7 +98,7 @@ def data_visualization_page():
             }
                 .navigation-bar {
             text-align: center;
-            background-color: #272727;
+            background-color: #2C3E50;
             color: #E07B39;
             border-radius: 5px;
         }
@@ -112,7 +112,7 @@ def data_visualization_page():
             }
         </style>
     """, unsafe_allow_html=True)
-    st.markdown('<div class="navigation-bar"><h2>Data visualization</h2></div>', unsafe_allow_html=True)
+    st.markdown('<div class="navigation-bar"><h2>📊 Dashboard</h2></div>', unsafe_allow_html=True)
 
 
 
@@ -261,10 +261,11 @@ def visualize_mnist_data(df):
 
 
 def visualize_supervised_data(df, numeric_columns, categorical_columns):
-    """Handle supervised learning visualizations"""
-   
+    """Handle supervised learning visualizations"""   
+    l=[""]
+
     # Select Target Column
-    target_col = st.selectbox("Select Target Column", options=list(df.columns), index=len(df.columns) - 1)
+    target_col = st.selectbox("Select Target Column", options=l + list(df.columns), index=0)
     st.session_state['target_column'] = target_col
 
     # Determine Problem Type
@@ -283,7 +284,7 @@ def visualize_supervised_data(df, numeric_columns, categorical_columns):
     if problem_type:
         st.info(f"Inferred Problem Type: {problem_type}")
     else:
-        st.warning("Could not determine problem type. Showing general visualizations.")
+        st.warning("Could not determine problem type. Please choose the target Column.")
 
     # Regression Visualizations
     if problem_type == "Regression":
@@ -329,7 +330,7 @@ def visualize_supervised_data(df, numeric_columns, categorical_columns):
         st.markdown("#### Class Distribution")
         class_counts = df[target_col].value_counts()
         fig = px.bar(class_counts, x=class_counts.index, y=class_counts.values,
-                     labels={'x': target_col, 'y': 'Count'}, title="Class Distribution")
+                    labels={'x': target_col, 'y': 'Count'}, title="Class Distribution")
         fig.update_layout(template="plotly_dark", paper_bgcolor="#f0f0f0", font=dict(color="#ffffff"))
         st.plotly_chart(fig, use_container_width=True)
 
@@ -352,8 +353,8 @@ def visualize_supervised_data(df, numeric_columns, categorical_columns):
             category = st.selectbox("Select Categorical Feature for Grouped Bar Chart:", categorical_columns)
             grouped = df.groupby([category, target_col]).size().reset_index(name="count")
             fig = px.bar(grouped, x=category, y="count", color=target_col, barmode="group",
-                         title=f"Grouped Bar Chart of {category} by {target_col}",
-                         labels={category: "Feature", "count": "Count"})
+                        title=f"Grouped Bar Chart of {category} by {target_col}",
+                        labels={category: "Feature", "count": "Count"})
             fig.update_layout(template="plotly_dark", paper_bgcolor="#f0f0f0", font=dict(color="#ffffff"))
             st.plotly_chart(fig, use_container_width=True)
 
@@ -367,7 +368,8 @@ def visualize_supervised_data(df, numeric_columns, categorical_columns):
 
     # General Visualizations (Fallback)
     else:
-        st.markdown("### General Visualizations")
+        pass
+'''        st.markdown("### General Visualizations")
         if len(numeric_columns) > 0:
             st.markdown("#### Feature Histogram")
             column = st.selectbox("Select a Numeric Column for Histogram:", numeric_columns)
@@ -378,7 +380,7 @@ def visualize_supervised_data(df, numeric_columns, categorical_columns):
             st.markdown("#### Boxplot")
             fig = px.box(df, y=column)
             fig.update_layout(template="plotly_dark", paper_bgcolor="#f0f0f0", font=dict(color="#ffffff"))
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, use_container_width=True)'''
 
 def visualize_unsupervised_data(df, numeric_columns, categorical_columns):
     """

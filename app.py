@@ -138,8 +138,8 @@ def home_page():
    
     <div class="header">
         <div>
-            <h1>ML Academy</h1>
-            <p>Your intuitive guide to a complete machine learning workflow.</p>
+            <h1>💡 AI Powered dashboard</h1>
+            <p>Bring Your Data..Get Insights..Make Decisions.</p>
         </div>
     </div>
 """, unsafe_allow_html=True)
@@ -155,7 +155,7 @@ def home_page():
             </div>
             <div class="feature-card">
                 <div class="feature-icon" style="background-image: url('https://img.icons8.com/ios/50/000000/combo-chart.png');"></div>
-                <div class="feature-title">Visualization</div>
+                <div class="feature-title">Dashboard</div>
                 <div class="feature-description">Analyze your data with clear visualizations.</div>
             </div>
             <div class="feature-card">
@@ -165,8 +165,8 @@ def home_page():
             </div>
             <div class="feature-card">
                 <div class="feature-icon" style="background-image: url('https://img.icons8.com/ios/50/000000/artificial-intelligence.png');"></div>
-                <div class="feature-title">Modeling</div>
-                <div class="feature-description">Train and test ML models.</div>
+                <div class="feature-title">AI Modeling</div>
+                <div class="feature-description">Train and test AI models.</div>
             </div>
                 <div class="feature-card">
                 <div class="feature-icon" style="background-image: url('https://img.icons8.com/ios/50/000000/rating.png');"></div>
@@ -196,15 +196,16 @@ def app():
 
     # Sidebar navigation using buttons
     with st.sidebar:
+        st.markdown("<h1 style='text-align: center; font-size: 2.5rem;'>Navigation</h1>", unsafe_allow_html=True)
         if st.button(" Home", key="home", use_container_width=True):
             st.session_state.current_page = "Home"
-        if st.button(" Data Handling", key="data_import", use_container_width=True):
+        if st.button(" Import Data", key="data_import", use_container_width=True):
             st.session_state.current_page = "Data Import"
-        if st.button(" Visualization", key="visualization", use_container_width=True):
+        if st.button(" Dashboard", key="visualization", use_container_width=True):
             st.session_state.current_page = "Data Visualization"
         if st.button(" Data Preparation", key="preparation", use_container_width=True):
             st.session_state.current_page = "Data Preparation"
-        if st.button(" Modeling", key="modeling", use_container_width=True):
+        if st.button(" Train AI models", key="modeling", use_container_width=True):
             st.session_state.current_page = "ML Modeling"
         if st.button(" Evaluation", key="evaluation", use_container_width=True):
             st.session_state.current_page = "Evaluation"

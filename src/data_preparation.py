@@ -124,7 +124,7 @@ def data_preparation_page():
             }
             .navigation-bar {
             text-align: center;
-            background-color: #272727;
+            background-color: #2C3E50;
             color: #E07B39;
             border-radius: 5px;
         }
@@ -232,7 +232,7 @@ def data_preparation_page():
 
             /* Sidebar Styling */
             [data-testid="stSidebar"] {
-                background-color: #DCE4C9 !important;
+                background-color: #F0F4F8 !important;
                 padding: 15px;
             }
             .sidebar-button {
@@ -267,7 +267,7 @@ def data_preparation_page():
     df = st.session_state['uploaded_data']
     
     # Page Title and Navigation Bar
-    st.markdown('<div class="navigation-bar"><h2>Data Preparation</h2></div>', unsafe_allow_html=True)
+    st.markdown('<div class="navigation-bar"><h2>⚙️ Prepare Data</h2></div>', unsafe_allow_html=True)
     #st.write("### Dataset Preview")
     #st.dataframe(df.head())
     # Check if it's MNIST data
@@ -345,44 +345,15 @@ def prepare_supervised_data(df, numeric_columns, categorical_columns):
                 processed_data.drop_duplicates(inplace=True)
                 st.info(f"Removed {initial_rows - processed_data.shape[0]} duplicate rows.")
                 #st.write("### Dataset After Basic Operations")
+
             if st.checkbox("Drop Unused Columns"):
                 unused_cols = st.multiselect("Select columns to drop", df.columns)
                 processed_data.drop(columns=unused_cols, inplace=True)
+
             if st.checkbox("Remove rows with missing value"):
                 initial_rows = processed_data.shape[0]
                 processed_data.dropna(inplace=True)
                 st.info(f"Removed {initial_rows - processed_data.shape[0]} missing values rows.")
-        if st.checkbox("Determine The Type"):
-            st.markdown("### Column Types Inferred")
-
-            # Identify initial types
-            numeric_cols = processed_data.select_dtypes(include=['number']).columns.tolist()
-            categorical_cols = processed_data.select_dtypes(include=['object', 'category']).columns.tolist()
-            datetime_cols = processed_data.select_dtypes(include=['datetime']).columns.tolist()
-
-            # Display the inferred types
-            st.write(f"**Numeric Columns:** {', '.join(numeric_cols) if numeric_cols else 'None'}")
-            st.write(f"**Categorical Columns:** {', '.join(categorical_cols) if categorical_cols else 'None'}")
-            st.write(f"**Datetime Columns:** {', '.join(datetime_cols) if datetime_cols else 'None'}")
-
-            # Option to change data type
-            st.markdown("### Change Column Data Types")
-            column_to_change = st.selectbox("Select Column to Change Type", processed_data.columns)
-            new_type = st.radio("Select New Data Type", ["Numeric", "Categorical", "Datetime"])
-
-            if st.button("Change Type"):
-                try:
-                    if new_type == "Numeric":
-                        processed_data[column_to_change] = pd.to_numeric(processed_data[column_to_change], errors='coerce')
-                    elif new_type == "Categorical":
-                        processed_data[column_to_change] = processed_data[column_to_change].astype('category')
-                    elif new_type == "Datetime":
-                        processed_data[column_to_change] = pd.to_datetime(
-                            processed_data[column_to_change], format="%m-%y", errors='coerce'
-                        )
-                    st.success(f"Successfully changed type of '{column_to_change}' to {new_type}.")
-                except Exception as e:
-                    st.error(f"Error changing type: {e}")
 
         # Show the processed data after all operations
         st.markdown("### Processed Dataset")
@@ -512,14 +483,30 @@ def prepare_supervised_data(df, numeric_columns, categorical_columns):
                 method = st.selectbox("Encoding method", ["Label Encoding", "One-Hot Encoding"])
                 if method == "Label Encoding":
                     le = LabelEncoder()
-                    
+                    encoding_results = []
+
                     for col in categorical_cols:
-                        processed_data[col] = le.fit_transform(processed_data[col])
-                        mapping = {original: encoded for encoded, original in enumerate(le.classes_)}
+                        original_values = processed_data[col]
+                        processed_data[col] = le.fit_transform(original_values)
+                        
+                        # Create a mapping table
+                        mapping_df = pd.DataFrame({
+                            'Column': col,
+                            'Original Value': le.classes_,
+                            'Encoded Value': range(len(le.classes_))
+                        })
+                        encoding_results.append(mapping_df)
+
                         st.write(f"### Label Encoding Mapping for '{col}':")
-                        st.write(", ".join([f"{k}: {v}" for k, v in mapping.items()]))
+                        st.dataframe(mapping_df)
                     
                     st.info("Categorical variables encoded using Label Encoding.")
+
+                    # Display all mappings as a combined table if needed
+                    if encoding_results:
+                        combined_results = pd.concat(encoding_results, ignore_index=True)
+                        st.write("### Combined Encoding Results")
+                        st.dataframe(combined_results)
                 else:
                     processed_data = pd.get_dummies(processed_data, drop_first=True)
                     st.info("Categorical variables encoded using One-Hot Encoding.")
@@ -537,6 +524,75 @@ def prepare_supervised_data(df, numeric_columns, categorical_columns):
                         if selected_cols:
                             processed_data[selected_cols] = scaler.fit_transform(processed_data[selected_cols])
                             st.info(f"Normalized columns: {', '.join(selected_cols)}")
+            if st.checkbox("Determine The Type"):
+                st.markdown("### Column Types Inferred")
+
+                # Identify initial types
+                numeric_cols = processed_data.select_dtypes(include=['number']).columns.tolist()
+                categorical_cols = processed_data.select_dtypes(include=['object', 'category']).columns.tolist()
+                datetime_cols = processed_data.select_dtypes(include=['datetime']).columns.tolist()
+
+                # Display the inferred types
+                st.write(f"**Numeric Columns:** {', '.join(numeric_cols) if numeric_cols else 'None'}")
+                st.write(f"**Categorical Columns:** {', '.join(categorical_cols) if categorical_cols else 'None'}")
+                st.write(f"**Datetime Columns:** {', '.join(datetime_cols) if datetime_cols else 'None'}")
+
+                # Option to change data type
+                st.markdown("### Change Column Data Types")
+                column_to_change = st.selectbox("Select Column to Change Type", processed_data.columns)
+                new_type = st.radio("Select New Data Type", ["Numeric", "Categorical", "Datetime"])
+
+                if st.button("Change Type"):
+                    try:
+                        if new_type == "Numeric":
+                            processed_data[column_to_change] = pd.to_numeric(processed_data[column_to_change], errors='coerce')
+                        elif new_type == "Categorical":
+                            processed_data[column_to_change] = processed_data[column_to_change].astype('category')
+                        elif new_type == "Datetime":
+                            processed_data[column_to_change] = pd.to_datetime(
+                                processed_data[column_to_change], errors='coerce')
+                            
+                        st.success(f"Successfully changed type of '{column_to_change}' to {new_type}.")
+                    except Exception as e:
+                        st.error(f"Error changing type: {e}")
+                if st.checkbox("Convert Dates to Sequential Numbers"):
+                    # Detect potential date columns
+                    date_cols = [col for col in processed_data.columns if "date" in col.lower() or "month" in col.lower()]
+                    if date_cols:
+                        selected_date_col = st.selectbox("Select the date column to convert", date_cols)
+                        if selected_date_col:
+                            # Convert to datetime with error handling
+                            processed_data[selected_date_col] = pd.to_datetime(
+                                processed_data[selected_date_col],
+                                format='%y-%b',  # Update format based on the input
+                                errors='coerce'
+                            )
+                            invalid_dates = processed_data[selected_date_col].isna().sum()
+                            if invalid_dates > 0:
+                                st.warning(f"{invalid_dates} invalid date entries found and replaced with NaT.")
+                                fix_option = st.radio(
+                                    "How would you like to handle invalid dates?",
+                                    ["Remove rows with NaT", "Replace NaT with the earliest valid date"]
+                                )
+                                if fix_option == "Remove rows with NaT":
+                                    processed_data.dropna(subset=[selected_date_col], inplace=True)
+                                    st.info("Rows with NaT have been removed.")
+                                elif fix_option == "Replace NaT with the earliest valid date":
+                                    earliest_date = processed_data[selected_date_col].min()
+                                    processed_data[selected_date_col].fillna(earliest_date, inplace=True)
+                                    st.info(f"NaT values replaced with the earliest valid date: {earliest_date}.")
+
+                            # Convert valid dates to sequential numbers
+                            processed_data['Time_Step'] = processed_data[selected_date_col].rank().astype(int)
+
+                            # Drop the original date column
+                            processed_data.drop(columns=[selected_date_col], inplace=True)
+                            st.info(f"Original date column {selected_date_col} has been removed and replaced with Time_Step.")
+
+                            
+                    else:
+                        st.warning("No potential date columns detected in the dataset.")
+
         with cool2:
             if st.checkbox("Handle Outliers"):
                 numerical_cols = processed_data.select_dtypes(include=['float64', 'int64']).columns
@@ -559,6 +615,8 @@ def prepare_supervised_data(df, numeric_columns, categorical_columns):
                         if selected_cols:
                             processed_data[selected_cols] = robust_scaler.fit_transform(processed_data[selected_cols])
                             st.info(f"Standardized columns: {', '.join(selected_cols)}")
+
+
 
 
         #st.write("### Dataset After Basic Operations")

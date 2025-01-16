@@ -1,4 +1,4 @@
-R² Score: -0.0188
-Mean Squared Error: 307061.1169
-Mean Absolute Error: 473.9593
-Root Mean Squared Error: 554.1310
+Accuracy: 0.8592
+Precision: 0.8597
+Recall: 0.8592
+F1 Score: 0.8591

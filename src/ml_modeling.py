@@ -294,7 +294,7 @@ def ml_modeling_page():
             }
             .navigation-bar {
             text-align: center;
-            background-color: #272727;
+            background-color: #2C3E50;
             color: #E07B39;
             border-radius: 5px;
         }
@@ -402,7 +402,7 @@ def ml_modeling_page():
 
             /* Sidebar Styling */
             [data-testid="stSidebar"] {
-                background-color: #DCE4C9 !important;
+                background-color: #F0F4F8 !important;
                 padding: 15px;
             }
             .sidebar-button {
@@ -426,7 +426,7 @@ def ml_modeling_page():
         """,
         unsafe_allow_html=True,
     )
-    st.markdown('<div class="navigation-bar"><h2>Data Modeling</h2></div>', unsafe_allow_html=True)
+    st.markdown('<div class="navigation-bar"><h2>🧠 Data Modeling</h2></div>', unsafe_allow_html=True)
 
     # Initialize problem_type at the start
     problem_type = None
@@ -564,7 +564,7 @@ def ml_modeling_page():
 
             with col1:
                 if problem_type == "Supervised":
-                    test_size = st.slider("Test Data Size (%)", 10, 40, 20)
+                    test_size = st.slider("Test Data Size (%)",0, 40, 20)
                     st.caption("Higher % = more data for testing, lower % = more data for training")
                 else:
                     if selected_model in ["K-Means", "DBSCAN"]:

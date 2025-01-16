@@ -76,7 +76,7 @@ def guide_page():
 
             /* Sidebar Styling */
             [data-testid="stSidebar"] {
-                background-color: #DCE4C9 !important;
+                background-color: #F0F4F8 !important;
                 padding: 15px;
             }
             .sidebar-button {
@@ -92,13 +92,9 @@ def guide_page():
                 border-radius: 5px;
                 transition: background-color 0.3s;
             }
-            .sidebar-button:hover {
-                background-color: #E07B39;
-                color: #FFFFFF;
-            }
-                   .navigation-bar {
+                .navigation-bar {
             text-align: center;
-            background-color: #272727;
+            background-color: #2C3E50;
             color: #E07B39;
             border-radius: 5px;
         }
@@ -106,9 +102,14 @@ def guide_page():
                 margin: 0;
                 color: #E07B39; /* Header text in beige */
             }
+            .sidebar-button:hover {
+                background-color: #E07B39;
+                color: #FFFFFF;
+            }
         </style>
     """, unsafe_allow_html=True)
-    st.markdown('<div class="navigation-bar"><h2>Guide Utilisateur</h2></div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="navigation-bar"><h2>ⓘ Guide Utilisateur</h2></div>', unsafe_allow_html=True)
 
     """
     Guide page for the ML Academy App.
